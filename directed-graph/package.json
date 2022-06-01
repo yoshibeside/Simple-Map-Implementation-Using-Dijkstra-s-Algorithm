@@ -13,7 +13,8 @@
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "sigma": "^2.3.1"
+    "sigma": "^2.3.1",
+    "vis-network": "^9.1.2"
   },
   "devDependencies": {
     "eslint": "8.16.0",
