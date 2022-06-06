@@ -1,50 +1,81 @@
-import graphContainer from '../components/graph/displayGraph';
+import NewGraph from '../components/graph/newGraph'
+import {useEffect,useRef, useState, useMemo} from 'react'
 import Card from '../components/ui/Card';
-import vis from 'vis-network';
-var container = () => {
-    if (typeof window === "undefined") {
-        document.getElementById("mynetwork");
-        console.log("angel");
-    }
-    console.log("angel");
-}
-var dot = "dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }";
-var data = () => {
-    if (typeof window === "undefined") {
-        vis.parseDOTNetwork(dot);
-        console.log("angel");
-    }
-}
+import classes from '../components/graph/newGraph.module.css';
+import Graph from "react-graph-vis";
+import { v4 as uuidv4 } from 'uuid'
 
-var network = () => {
-    if (typeof window === "undefined") {
-        new vis.Network(container, data);
-        console.log("angel");
-    }
-}
+function HomePage() {
+    const namaGraph = useRef();
+    const INITIAL_STATE = {
+        jsonfile:
+            {
+                counter: 0,
+                graph: {
+                  nodes: [
+                    { id: 0, label: "", color: "" },
+                  ],
+                  edges: [
+                    { from: 0, to: 0 },
+                  ]
+                }
+            }
+        }
+    const [submit, setSubmit] = useState(false)
+    const [state, setState] = useState({...INITIAL_STATE})
+    const [update, setUpdate] = useState(0)
+    const version = useMemo(uuidv4, [state, update]);
+    const fileInputRef = useRef();
+4
+    const handleFileInput = (event) => {
+		const reader = new FileReader();
+        reader.readAsText(event.target.files[0])
+        setUpdate(update + 1)
+        setSubmit(true)
+		reader.onload = (event) => {
+            setState({jsonfile: JSON.parse(event.target.result)}, () => {
+                console.log(state.jsonfile);
+            });
+            console.log(state.jsonfile);
+            console.log("masuk");
+		};
+	};
 
+    useEffect (() => {
+        console.log("mounting");
+        console.log(update)
+        if (fileInputRef) fileInputRef.current.value = null;
+        return () => {
+            console.log("unmounting");
+        }
+    }, [state])
 
-function Test() {
-
-    const loadGraph = async () => {
-        const container = document.getElementById("mynetwork");
-        const dot = "dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }";
-        console.log(dot);
-            // const data = vis.parseDOTNetwork(dot);
-            // return new vis.Network(container, data);
-
-        return ;
-       
-    }
-
+    const options = {
+        layout: {
+          hierarchical: false
+        },
+        edges: {
+          color: "#000000"
+        }
+      };
+    
     return (
-        <Card>
-            <p>Network supports the DOT language.</p>
-            <button onClick = {loadGraph}> Press mee</button>
 
-        </Card>
+      <Card>
+
+        <div className={classes.control}>
+        <label htmlFor='penyakit'>Nama Graph</label>
+        <input type='text' name='graphname' required id='penyakit'  />
+        </div>
+        <div className={classes.control} name = "Testing angelic*a">
+        <label htmlFor='dnasequence'>Sequence DNA</label>
+        <input type='file' name='graphSequence' ref={fileInputRef} onChange = {(e)=>handleFileInput(e)} accept=".json" />
+        </div>
+        <Graph key = {version} graph={state.jsonfile.graph} options={options}  style={{ height: "640px" }} />
         
+      </Card>
+
     );
 }
 
-export default Test
+export default HomePage
