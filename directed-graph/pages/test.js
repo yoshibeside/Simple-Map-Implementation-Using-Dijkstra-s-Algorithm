@@ -28,10 +28,14 @@ function HomePage() {
     const fileInputRef = useRef();
 4
     const handleFileInput = (event) => {
+		
+	};
+
+    useEffect (() => {
+        console.log("mounting");
+        console.log(update)
 		const reader = new FileReader();
-        reader.readAsText(event.target.files[0])
-        setUpdate(update + 1)
-        setSubmit(true)
+        reader.readAsText(fileInputRef.target.files[0])
 		reader.onload = (event) => {
             setState({jsonfile: JSON.parse(event.target.result)}, () => {
                 console.log(state.jsonfile);
@@ -39,16 +43,10 @@ function HomePage() {
             console.log(state.jsonfile);
             console.log("masuk");
 		};
-	};
-
-    useEffect (() => {
-        console.log("mounting");
-        console.log(update)
-        if (fileInputRef) fileInputRef.current.value = null;
         return () => {
             console.log("unmounting");
         }
-    }, [state])
+    }, [update])
 
     const options = {
         layout: {
@@ -67,9 +65,9 @@ function HomePage() {
         <label htmlFor='penyakit'>Nama Graph</label>
         <input type='text' name='graphname' required id='penyakit'  />
         </div>
-        <div className={classes.control} name = "Testing angelic*a">
+        <div className={classes.control}>
         <label htmlFor='dnasequence'>Sequence DNA</label>
-        <input type='file' name='graphSequence' ref={fileInputRef} onChange = {(e)=>handleFileInput(e)} accept=".json" />
+        <input type='file' name='graphSequence' required id='sequence' ref={fileInputRef} onChange = {() => setUpdate(update + 1)} accept=".json" />
         </div>
         <Graph key = {version} graph={state.jsonfile.graph} options={options}  style={{ height: "640px" }} />
         

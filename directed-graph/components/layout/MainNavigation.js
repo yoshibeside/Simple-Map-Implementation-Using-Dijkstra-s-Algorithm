@@ -4,23 +4,7 @@ function MainNavigation() {
 
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>Match DNA bukan Tinder Matching</div>
-      <nav>
-        <ul>
-          <li>
-            <Link href='/'>Home</Link>
-          </li>
-          <li>
-            <Link href='/AddDNA'>Add New DNA Sequence</Link>
-          </li>
-          <li>
-            <Link href='/CheckDNA'>DNA Test</Link>
-          </li>
-          <li>
-            <Link href='/DnaSearchForm'>DNA Test History</Link>
-          </li>
-        </ul>
-      </nav>
+      <div className={classes.logo}>Finding the Shortest Past</div>
     </header>
   );
 }

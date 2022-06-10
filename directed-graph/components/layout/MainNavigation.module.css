@@ -8,25 +8,6 @@
     padding: 0 10%;
     border-top: 0px solid #ffddb5;
   }
-  
-  .header ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: baseline;
-  }
-  
-  .header li {
-    margin-left: 3rem;
-  }
-  
-  .header a {
-    text-decoration: none;
-    font-size: 1.5rem;
-    color: white;
-  }
-  
   .logo {
     font-size: 2rem;
     color: white;
