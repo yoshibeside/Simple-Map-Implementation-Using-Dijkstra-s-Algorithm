@@ -11,6 +11,7 @@
   "dependencies": {
     "graphology": "^0.24.1",
     "next": "12.1.6",
+    "perf_hooks": "^0.0.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-graph-vis": "^1.0.7",

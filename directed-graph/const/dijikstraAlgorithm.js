@@ -1,13 +1,12 @@
+
 function solver(graph, start, goal) {
-    console.log(graph)
-    console.log("masuk")
+    var startTime = window.performance.now()
     // Dalam graph terdapat atribut
     // counter
     // graph
         // nodes: [{id,label,color}]
         // edges: [{from, to, bobot}]
 
-    const visited = {}
     const unvisited = {}
     let shortestDistance = new Array(graph.counter).fill(Infinity)
     let previousVertex = new Array(graph.counter).fill(Infinity)
@@ -15,115 +14,118 @@ function solver(graph, start, goal) {
 
    // Mencari nilai id tertinggi untuk inisialisasi array
     let maxId = graph.graph.nodes[0].id
-    for (let maxNodes in graph.nodes){
-        if (maxNodes.id > maxId) {
-            maxId = maxNodes.id
+    for (let maxNodes in graph.graph.nodes){
+        if (graph.graph.nodes[maxNodes].id > maxId) {
+            maxId = graph.graph.nodes[maxNodes].id
         }
     }
-
-    // Mengisi node
-    for (let idNodes in graph.graph.nodes) { // angka doang
+    maxId++
+    // Mengisi node (idNodes dimulai dari 0,1,2,3)
+    // id dapat dimulai dari 0 atau 1
+    for (let idNodes in graph.graph.nodes) { 
         console.log(idNodes)
         unvisited[graph.graph.nodes[idNodes].id] = {
-            idedge: [],
+            idedge: [],// node yang terhubung
             bobots: new Array(maxId).fill(0),
+            visited: false
         }
     }
-    let tempEdges = (graph.graph.edges)
+    let tempEdges = (graph.graph.edges) 
     // Mengisi edgesnya (from: index), (to: isiidEdge) , (bobot: bobots)
-    for (let edgesG in graph.graph.edges) {
-        console.log(edgesG)
-        unvisited[tempEdges[edgesG].from].idedge.push(tempEdges[edgesG].to)
-        unvisited[tempEdges[edgesG].from].bobots[tempEdges[edgesG].to] = tempEdges[edgesG].bobot
+    for (let edgesG in tempEdges) {// edges:0,1,2
+        unvisited[tempEdges[edgesG].from].idedge.push(tempEdges[edgesG].to) // memasukkan tujuan node
+        unvisited[tempEdges[edgesG].from].bobots[tempEdges[edgesG].to] = tempEdges[edgesG].bobot // masukkan bobt pada indeks id tujuannya
     }
+    console.log(unvisited)
 
-    // Algoritma Dijistra akan dimulai
+    // Algoritma Dijikstra akan dimulai
 
     //  STEP 1 make all shortest distance from initial to infinity and start to 0
     shortestDistance[start] = 0
 
 //     # STEP 2 current Vertex examine where the node goes to get the smalles, add to the shortestDistance array.
     
-    let chosen = start
-    console.log(unvisited[chosen].idedge)
-    while (Object.keys(unvisited).length != 0) {
-        for (let selectedEdges in unvisited[chosen].idedge) {
-            let selected = unvisited[chosen].idedge[selectedEdges]
-            console.log("visited: " + visited)
-            console.log("selected: " + selected)
-            console.log( " banding: " + shortestDistance[selected])
-            console.log("hasil jarak: " + (unvisited[chosen].bobots[selected] + shortestDistance[chosen]))
-            if (selected in visited){
-                console.log("masuk1")
-            }
-            else if (shortestDistance[selected] > unvisited[chosen].bobots[selected] + shortestDistance[chosen]){
-                shortestDistance[selected] = unvisited[chosen].bobots[selected] + shortestDistance[chosen]
-                previousVertex[selected] = chosen
-                console.log("masuk2")
-            }
-            console.log("=================================")
-        }
-        // STEP 3 after updating the shortest distance, then add to the visited nodes and delete from the uncisited nodes
-        visited[chosen] = unvisited[chosen]
-        delete unvisited[chosen]
-        console.log(unvisited)
-
-
-        // STEP 4 Now pick which cariable that's chosen shortest distance got it from the shortestDistance, maksudnya set the initial
-        for (let checkingUnvisited in unvisited) {
-            console.log("sisa unvisited" + checkingUnvisited)
-            let minId = Infinity
-            if (shortestDistance[checkingUnvisited] < minId) {
-                minId = shortestDistance[checkingUnvisited]
-                chosen = checkingUnvisited
+    let amtVisit = 0
+    let iteration = 0
+    while (amtVisit != maxId) {
+        iteration++
+        // find node shortest distance and unvisited
+        let shortest = Infinity
+        let idxShortest = 0
+        for (let i in shortestDistance) {
+            if (unvisited[i].visited == false && shortestDistance[i] < shortest) {
+                idxShortest = i
+                shortest = shortestDistance[i]
             }
         }
-        console.log("chosen: " + chosen)
-        for (let z = 0; z < graph.counter; z++) {
-            console.log("shortest distance of each vertex is: " + shortestDistance[z] + " vertex " + z)
+        if (shortest == Infinity) {break}
+        // Calculate path, then updating if smaller than the shortest distance. Change visited to true.
+        for (let j in unvisited[idxShortest].idedge) {
+            let visitingVertex = unvisited[idxShortest].idedge[j]
+            let calculateDistance = shortestDistance[idxShortest] + unvisited[idxShortest].bobots[visitingVertex]
+            if (shortestDistance[visitingVertex] > calculateDistance) {
+                shortestDistance[visitingVertex] = calculateDistance
+                previousVertex[visitingVertex] = idxShortest
+            }
         }
+        unvisited[idxShortest].visited = true
+        amtVisit++
     }
+    console.log("All previous Vertex")
     console.log(previousVertex)
 
     let picked = []
     let chosenGoal = goal
-    picked.push[goal]
+    let found = true
+    picked.push(chosenGoal)
+
+    // Finding path
     while (previousVertex[chosenGoal] != Infinity) {
-        console.log(previousVertex[chosenGoal])
         picked.push(previousVertex[chosenGoal])
         chosenGoal = previousVertex[chosenGoal]
-    if (previousVertex[(picked.length-1)] != start ) {
+    }
+    if (picked[picked.length-1] != start ) {
         console.log("no alternative")
-    }
-    else {
-        picked.push(start)
-    }
+        found = false
     }
 
+    console.log("Picked adalah :" + picked)
+    console.log("Goal aalah: "+ goal)
+    console.log("iterations adalah" + iteration)
+
+
+    // Making json
     let counterObject = picked.length
     let graphsResourceNode = []
     let graphsResourceEdge = []
     for ( let nodeMade in graph.graph.nodes) {
-        if (graph.graph.nodes[nodeMade].id in picked) {
-            graphsResourceNode.push(graph.graph.nodes[nodeMade])
+        for (let pickedNode in picked) {
+            if (graph.graph.nodes[nodeMade].id == picked[pickedNode]) {
+                graphsResourceNode.push(graph.graph.nodes[nodeMade])
+            }
         }
+        
     }
     for (let number = 0; number < (picked.length-1) ; number++) {
         for (let checking in graph.graph.edges) {
-            if (graph.graph.edges[checking].from == picked[number] && graph.graph.edges[checking].to == picked[(number+1)]) {
+            if (graph.graph.edges[checking].to == picked[number] && graph.graph.edges[checking].from == picked[(number+1)]) {
                 graphsResourceEdge.push(graph.graph.edges[checking])
             }
         }
         
     }
-
-
+    var endTime = window.performance.now()
+    let timeExcecution = (endTime - startTime)
+    console.log("time adalah " + timeExcecution)
     let result = {
         "counter" :counterObject,
         "graph": {
             "nodes" : graphsResourceNode,
             "edges" : graphsResourceEdge
-        }
+        },
+        "found" : found,
+        "time" :timeExcecution,
+        "iterations": iteration
     }
     console.log(result)
     return result

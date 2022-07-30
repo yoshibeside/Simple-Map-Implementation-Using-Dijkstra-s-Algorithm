@@ -1,27 +1,27 @@
 {"counter": 5,
     "graph": {
       "nodes": [
-        { "id": 0, "label": "Node 1", "color": "#e04141" },
-        { "id": 1, "label": "Node 2", "color": "#e09c41" },
-        { "id": 2, "label": "Node 3", "color": "#e0df41" },
-        { "id": 3, "label": "Node 4", "color": "#7be041" },
-        { "id": 4, "label": "Node 5", "color": "#41e0c9" }
+        { "id": 1, "label": "Node 1", "color": "#e04141" },
+        { "id": 2, "label": "Node 2", "color": "#e09c41" },
+        { "id": 3, "label": "Node 3", "color": "#e0df41" },
+        { "id": 4, "label": "Node 4", "color": "#7be041" },
+        { "id": 5, "label": "Node 5", "color": "#41e0c9" }
       ],
       "edges": [
-        { "from": 0, "to": 1  ,"bobot": 6},
-        { "from": 0, "to": 3  ,"bobot": 1},
-        { "from": 1, "to": 0  ,"bobot": 6},
-        { "from": 1, "to": 3  ,"bobot": 2},
-        { "from": 1, "to": 4  ,"bobot": 2},
-        { "from": 1, "to": 2  ,"bobot": 5},
-        { "from": 2, "to": 1  ,"bobot": 5},
-        { "from": 2, "to": 4  ,"bobot": 5},
-        { "from": 3, "to": 0  ,"bobot": 1},
-        { "from": 3, "to": 1  ,"bobot": 2},
-        { "from": 3, "to": 4  ,"bobot": 1},
-        { "from": 4, "to": 3  ,"bobot": 1},
-        { "from": 4, "to": 1  ,"bobot": 2},
-        { "from": 4, "to": 2  ,"bobot": 5}
+        { "from": 1, "to": 2  ,"bobot": 6},
+        { "from": 1, "to": 4  ,"bobot": 1},
+        { "from": 2, "to": 1  ,"bobot": 6},
+        { "from": 2, "to": 4  ,"bobot": 2},
+        { "from": 2, "to": 5  ,"bobot": 2},
+        { "from": 2, "to": 3  ,"bobot": 5},
+        { "from": 3, "to": 2  ,"bobot": 5},
+        { "from": 3, "to": 5  ,"bobot": 5},
+        { "from": 4, "to": 1  ,"bobot": 1},
+        { "from": 4, "to": 2  ,"bobot": 2},
+        { "from": 4, "to": 5  ,"bobot": 1},
+        { "from": 5, "to": 4  ,"bobot": 1},
+        { "from": 5, "to": 2  ,"bobot": 2},
+        { "from": 5, "to": 3  ,"bobot": 5}
       ]
     }
   }

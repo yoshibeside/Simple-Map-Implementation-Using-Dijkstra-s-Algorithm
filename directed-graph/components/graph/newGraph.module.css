@@ -13,7 +13,7 @@
   }
   
   .control input,
-  .control textarea {
+  .control textarea{
     display: block;
     font: inherit;
     border-radius: 4px;
@@ -21,13 +21,26 @@
     padding: 0.25rem;
     width: 100%;
   }
+
+  .paragraf {
+
+    text-align: center;
+    padding-top: 5px;
   
-  .actions {
+  }
+  .paragraf2 {
+    text-align: center;
+    padding-bottom: 5px;
+  }
+  
+  .actions{
     margin-top: 1rem;
     text-align: right;
   }
   
-  .actions button {
+  .actions button,
+  .actions a {
+    margin-right: 1rem;
     font: inherit;
     cursor: pointer;
     background-color: #dab88b;
